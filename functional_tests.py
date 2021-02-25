@@ -18,9 +18,11 @@ class NewVisitorTest(unittest.TestCase):
 		self.assertIn('Dogoneo', self.browser.title)
 
 		#at the home page he noticed list of dogs with their name and basic data
-
+		dog_list = self.browser.find_element_by_tag_name('ul').text
+		self.assertIn('Zbyszek', dog_list)
 		#also noted a feature to filter results based on size, age, town
-		
+		search_form = self.browser.find_element_by_tag_name('form')
+		self.assertIn('Search', search_form)
 		self.fail('Done')
 
 
