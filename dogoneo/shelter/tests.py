@@ -18,6 +18,23 @@ class HomePageTest(TestCase):
 		expected = render_to_string('home_page.html')
 		self.assertEqual(response.content.decode(), expected)
 
+	def test_home_page_display_all_dogs(self):
+		test_dog = Dog()
+		test_dog.name = 'Zbyszek'
+		test_dog.gender = 'male'
+		test_dog.age = 10
+		test_dog.save()
+		test_dog2 = Dog()
+		test_dog2.name = 'Zbyszkowa'
+		test_dog2.gender = 'female'
+		test_dog2.age = 6
+		test_dog2.save()
+
+		request = HttpRequest()
+		response = home_page(request)
+
+		self.assertIn('Zbyszek', response.content.decode())
+		self.assertIn('Zbyszkowa', response.content.decode())
 
 class DogModelTest(TestCase):
 
@@ -28,12 +45,6 @@ class DogModelTest(TestCase):
 		test_dog.short_description = 'Uczy się chodzić na smyczy'
 		test_dog.gender = 'male'
 		test_dog.age = 10
-		test_dog.accepts_cat = 'Nie sprawdzono'
-		test_dog.accepts_dogs = 'Nie sprawdzono'
-		test_dog.is_sterilised = True
-		test_dog.is_castrated = True
-		test_dog.is_vaccinated = True
-		test_dog.has_chip = True
 		test_dog.save()
 
 		# TODO: change way of testing models
@@ -42,9 +53,19 @@ class DogModelTest(TestCase):
 		self.assertEqual(dogs[0].short_description, 'Uczy się chodzić na smyczy')
 		self.assertEqual(dogs[0].gender, 'male')
 		self.assertEqual(dogs[0].age, 10)
-		self.assertEqual(dogs[0].accepts_cat, 'Nie sprawdzono')
-		self.assertEqual(dogs[0].accepts_dogs, 'Nie sprawdzono')
-		self.assertEqual(dogs[0].is_sterilised, True)
-		self.assertEqual(dogs[0].is_castrated, True)
-		self.assertEqual(dogs[0].is_vaccinated, True)
-		self.assertEqual(dogs[0].has_chip, True)
+
+	def test_creating_dog_with_funny_gender(self):
+
+		test_dog = Dog()
+		test_dog.name = 'Zbyszek'
+		test_dog.short_description = 'Uczy się chodzić na smyczy'
+		test_dog.gender = 'male'
+		test_dog.age = 10
+		test_dog.save()
+
+		# TODO: change way of testing models
+		dogs = Dog.objects.all()
+		self.assertEqual(dogs[0].name, 'Zbyszek')
+		self.assertEqual(dogs[0].short_description, 'Uczy się chodzić na smyczy')
+		self.assertEqual(dogs[0].gender, 'male')
+		self.assertEqual(dogs[0].age, 10)

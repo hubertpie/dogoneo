@@ -8,7 +8,12 @@
 		<input type="submit" value="Search">
 	</form>
 	<ul>
-		<li>Zbyszek</li>
+		{% for dog in dogs %}
+		<li>
+			<p>{{ dog.name }}</p>
+			<p>{{ dog.age }}</p>
+		</li>
+		{% endfor %}
 	</ul>
 </body>
 </html>
