@@ -22,7 +22,9 @@ class NewVisitorTest(unittest.TestCase):
 		self.assertIn('Zbyszek', dog_list)
 		#also noted a feature to filter results based on size, age, town
 		search_form = self.browser.find_element_by_tag_name('form')
-		self.assertIn('Search', search_form)
+		search_button = self.browser.find_element_by_tag_name('input').get_attribute("value")
+		self.assertTrue(search_form)
+		self.assertEqual('Search', search_button)
 		self.fail('Done')
 
 
