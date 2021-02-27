@@ -16,10 +16,9 @@ class Dog(models.Model):
 	accepts_kids = models.TextField(blank=True)
 	accepts_cats = models.TextField(blank=True)
 	accepts_dogs = models.TextField(blank=True)
-	is_sterilised = models.BooleanField(default=False)
-	is_castrated = models.BooleanField(default=False)
-	is_vaccinated = models.BooleanField(default=False)
-	has_chip = models.BooleanField(default=False)
+	is_sterilised = models.TextField(blank=True)
+	is_vaccinated = models.TextField(blank=True)
+	has_chip = models.TextField(blank=True)
 
 	class Meta:
 		ordering = ('name', )

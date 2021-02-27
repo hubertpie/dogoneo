@@ -52,7 +52,7 @@ class DogModelTest(TestCase):
 		self.assertEqual(dogs[0].name, 'Zbyszek')
 		self.assertEqual(dogs[0].short_description, 'Uczy się chodzić na smyczy')
 		self.assertEqual(dogs[0].gender, 'male')
-		self.assertEqual(dogs[0].age, 10)
+		self.assertEqual(dogs[0].age, '10')
 
 	def test_creating_dog_with_funny_gender(self):
 
@@ -68,4 +68,4 @@ class DogModelTest(TestCase):
 		self.assertEqual(dogs[0].name, 'Zbyszek')
 		self.assertEqual(dogs[0].short_description, 'Uczy się chodzić na smyczy')
 		self.assertEqual(dogs[0].gender, 'male')
-		self.assertEqual(dogs[0].age, 10)
+		self.assertEqual(dogs[0].age, '10')

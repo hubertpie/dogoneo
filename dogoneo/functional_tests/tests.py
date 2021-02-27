@@ -27,7 +27,6 @@ class NewVisitorTest(LiveServerTestCase):
 		search_button = self.browser.find_element_by_tag_name('input').get_attribute("value")
 		self.assertTrue(search_form)
 		self.assertEqual('Search', search_button)
-		self.fail('Done')
 
 
 

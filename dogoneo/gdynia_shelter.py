@@ -19,7 +19,7 @@ def find_all_dogos_on_page(soup):
 	dogs = [requests.get(dog.find_all('a', href=True)[0]['href']) for dog in dogos]
 	return [dog for dog in dogs if dog.status_code == 200]
 
-def get_dogo_detail(dogo_page):
+def insert_into_db(dogo_page):
 	dogo_soup = BeautifulSoup(dogo_page.content, 'html.parser')
 	dogo_info = dogo_soup.find('ul', {'class': 'list-group list-group-flush'})
 
@@ -29,35 +29,32 @@ def get_dogo_detail(dogo_page):
 		info_content = info.find_all('div')
 		try:
 			label = re.sub(re_delete_special_char, '', str(info_content[0].contents[0]))
-			value = re.sub(re_delete_special_char, '', str(info_content[1].contents[0]))
+			if 'span' in str(info_content):
+				value = info_content[1].find('span')['title']
+			else:
+				value = re.sub(re_delete_special_char, '', str(info_content[1].contents[0]))
 		except Exception:
 			value = 'Brak informacji'
 		dogo_information[label] = value
-	# Dogo image
-
 	dogo_img_div = dogo_soup.find('div', {'class': 'col mb-3'})
 	dogo_name = re.sub(re_delete_special_char, '', dogo_soup.find('h1', {'class': 'js-name'}).contents[0])
 	dogo_img_src = dogo_img_div.find('img')['src']
-	# urllib.request.urlretrieve(dogo_img_src, 'Dogs/' + dogo_name + '.jpg')
 
-	# Write info to file for now
-	# with open('Dogs/' + dogo_name + '.txt', 'w', encoding='utf-8') as f:
-	# 	for key, value in dogo_information.items():
-	# 		f.write(f"{key}: {value}\n")
 	dog = Dog(name=dogo_name,
-				  short_description=dogo_information['Dla kogo?'],
 				  gender=dogo_information['Płeć'],
-				  age=dogo_information['Wiek'],
-				  accepts_adults=dogo_information['Stosunek do dorosłych'],
-				  accepts_kids=dogo_information['Stosunek do dzieci'],
-				  accepts_cats=dogo_information['Stosunek do kotów'],
-				  accepts_dogs=dogo_information['Stosunek do psów'],
+				  short_description=dogo_information.get('Dla kogo?', 'Brak informacji'),
+				  age=dogo_information.get('Wiek', 'Brak informacji'),
+				  accepts_adults=dogo_information.get('Stosunek do dorosłych', 'Brak informacji'),
+				  accepts_kids=dogo_information.get('Stosunek do dzieci', 'Brak informacji'),
+				  accepts_cats=dogo_information.get('Stosunek do kotów', 'Brak informacji'),
+				  accepts_dogs=dogo_information.get('Stosunek do psów', 'Brak informacji'),
+				  has_chip=dogo_information.get('Czip', 'Brak informacji'),
+				  is_sterilised=dogo_information.get('Kastracja  sterylizacja', 'Brak informacji'),
+				  is_vaccinated=dogo_information.get('Szczepienie  odrobaczenie  odpchlenie', 'Brak informacji'),
 				  )
 	img_request=requests.get(dogo_img_src)
 	if img_request.status_code == 200:
 		dog.image.save(dogo_name, ContentFile(img_request.content), save=True)
-
-	print('done')
 
 
 if __name__=='__main__':
@@ -72,5 +69,5 @@ if __name__=='__main__':
 				page = BeautifulSoup(result.content, 'html.parser')
 				dogs = find_all_dogos_on_page(page)
 				for dog in dogs:
-					get_dogo_detail(dog)
+					insert_into_db(dog)
 
