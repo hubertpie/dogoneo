@@ -1,8 +1,10 @@
+from django.test import LiveServerTestCase
+from shelter.models import Dog
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 import unittest
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
 
 	def setUp(self):
 		self.browser = webdriver.Chrome(ChromeDriverManager().install())	
@@ -12,7 +14,7 @@ class NewVisitorTest(unittest.TestCase):
 
 	def test_can_get_home_page(self):
 		#he is trying to open a new page that has dogs from different shelters in one place
-		self.browser.get('http://localhost:8000')
+		self.browser.get(self.live_server_url)
 
 		#noticed the page header - dogoneo
 		self.assertIn('Dogoneo', self.browser.title)

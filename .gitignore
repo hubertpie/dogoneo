@@ -118,3 +118,6 @@ GitHub.sublime-settings
 **/migrations/**
 !**/migrations
 !**/migrations/__init__.py
+
+#dog images
+**/dogs
