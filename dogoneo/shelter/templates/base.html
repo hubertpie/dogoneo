@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dogoneo</title>
+	<link rel="stylesheet" type="text/css" href="/static/bootstrap.css">
+</head>
+<body>
+	<header class="page-header">
+		<div class="container-fluid">
+			<nav class="navbar navbar-expand-lg">
+				<a href="#">Home page</a>
+				<a href="#">About</a>
+				<a href="#">Contact</a>
+			</nav>
+		</div>
+	</header>
+	<div class="container">
+		<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 mt-3">
+			{% block content %}
+			{% endblock %}
+		</div>
+	</div>
+</body>
+</html>
