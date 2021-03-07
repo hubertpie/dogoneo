@@ -1,38 +1,40 @@
 {% extends 'base.html' %}
-{% load thumbnail %}
 {% load static %}
+{% load thumbnail %}
 
 {% block content %}
 <div class="row">
 	{% for dog in dogs %}
-		<div class="col-4">
-			<div class="card-body">
+		<div class="col-4 mb-4">
+			<div class="card">
 				{% thumbnail dog.image "200x200" as im %}
 				<img src="{{ im.url }}" class="img-thumbnail">
 				{% endthumbnail %}
 				<h5 class="card-title text-center">{{ dog.name }}</h5>
-				<ul>
-					<li class="list-group-item d-flex justify-content-between">
-						<div class="label">Płeć</div>
-						<div class="value">{{ dog.gender }}</div>
-					</li>
-					<li class="list-group-item d-flex justify-content-between">
-						<div class="label">Wiek</div>
-						<div class="value">{{  dog.age }}</div>
-					</li>
-					<li class="list-group-item d-flex justify-content-between">
-						<div class="label">Sterylizacja</div>
-						<div class="value">{{ dog.is_sterilised }}</div>
-					</li>
-					<li class="list-group-item d-flex justify-content-between">
-						<div class="label">Szczepienia</div>
-						<div class="value">{{ dog.is_vaccinated }}</div>
-					</li>
-					<li class="list-group-item d-flex justify-content-between">
-						<div class="label">Czip</div>
-						<div class="value">{{ dog.has_chip }}</div>
-					</li>																				
-				</ul>
+				<div class="card-body">
+					<ul class="list-group">
+						<li class="list-group-item d-flex justify-content-between">
+							<div class="label">Płeć</div>
+							<div class="value">{{ dog.gender }}</div>
+						</li>
+						<li class="list-group-item d-flex justify-content-between">
+							<div class="label">Wiek</div>
+							<div class="value">{{  dog.age }}</div>
+						</li>
+						<li class="list-group-item d-flex justify-content-between">
+							<div class="label">Sterylizacja</div>
+							<div class="value">{{ dog.is_sterilised }}</div>
+						</li>
+						<li class="list-group-item d-flex justify-content-between">
+							<div class="label">Szczepienia</div>
+							<div class="value">{{ dog.is_vaccinated }}</div>
+						</li>
+						<li class="list-group-item d-flex justify-content-between">
+							<div class="label">Czip</div>
+							<div class="value">{{ dog.has_chip }}</div>
+						</li>																				
+					</ul>					
+				</div>
 			</div>
 		</div>
 	{% endfor %}
