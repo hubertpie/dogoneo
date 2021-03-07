@@ -4,5 +4,5 @@ from shelter import views as shelter_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', shelter_views.home_page)
+    path('', shelter_views.dog_list)
 ]
