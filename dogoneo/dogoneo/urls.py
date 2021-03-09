@@ -6,7 +6,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', shelter_views.dog_list)
+    path('', shelter_views.dog_list),
+    path('<int:id>/', shelter_views.dog_detail, name='dog_detail'),
 ]
 
 if settings.DEBUG:
